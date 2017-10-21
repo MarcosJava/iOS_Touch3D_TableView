@@ -13,6 +13,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("gett here 2")
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Swift.Void){
+        
+        print("gett here")
+        print("shortcut \(shortcutItem.type) ou \(shortcutItem.localizedTitle) ")
+        guard let types = ApplicationShortcutTypes(rawValue: shortcutItem.localizedTitle) else {return }
+        switch types {
+            case .nadaFaz:
+                return
+            case .marcos:
+                showMarcos();
+                break
+        }
+    }
+    
+    func showMarcos(){
+        let marcos = Pessoa(nome: "Marcos", idade: 25)
+        let pessoaView = PessoaViewController(pessoa: marcos)        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = pessoaView
+        self.window?.backgroundColor = UIColor.white
+        self.window?.makeKeyAndVisible()
+    }
+
+    enum ApplicationShortcutTypes: String {
+        case nadaFaz = "Faz Nada"
+        case marcos = "Marcolino"
+    }
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
